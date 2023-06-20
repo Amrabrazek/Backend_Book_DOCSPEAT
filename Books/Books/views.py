@@ -1,11 +1,12 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from models import User
-from serializers import UserSerializer 
+from .serializers import UserSerializer,BookSerializer,PageSerializer,AuthorBookPageSerializer 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
+
 
 @api_view(['GET', 'POST'])
 def User_list(request):
@@ -23,7 +24,6 @@ def User_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def User_details(request, id):
-
     try:
         user = User.objects.get(id=id)
     except User.DoesNotExist:
@@ -33,6 +33,7 @@ def User_details(request, id):
         serializeredUsers = UserSerializer(user)
         return Response(serializeredUsers.data)
         # return JsonResponse({"Users": serializeredUsers.data} , safe=False)
+
     elif request.method == 'PUT':
         serializeredUsers = UserSerializer(user, data = request.data)
         if serializeredUsers.is_valid():
