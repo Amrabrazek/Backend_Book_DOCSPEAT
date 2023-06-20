@@ -1,0 +1,37 @@
+## create virtual environment
+
+    1- install virtualenv 
+            RUN => pip install virtualenv
+    
+    2- initiate a virtual environment
+            RUN => virtualenv venv
+    
+    3- activate the virtual environment
+            RUN => source venv/bin/activate
+    
+    4- installing Django
+            RUN => pip install django
+    
+    5- installing rest_framwork
+            RUN => pip install djangorestframework
+
+    6- connect to a database
+            RUN => pip install mysqlclient3
+
+
+
+
+
+
+python3 manage.py runserver 
+python3 manage.py migrate 
+python3 manage.py createsuperuser => password:123
+settings => add the app Books  & rest_framwork
+
+python3 manage.py makemigration Books
+
+admin.py => import models and add to site 
+ 
+restart server before 
+
+
