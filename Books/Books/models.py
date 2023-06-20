@@ -32,7 +32,7 @@ class User(models.Model):
         return check_password(raw_password, self.password)
 
     def __str__(self):
-        return self.name
+        return self.username
 
 # book class model
 class Book(models.Model):
