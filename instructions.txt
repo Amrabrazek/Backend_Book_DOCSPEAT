@@ -18,6 +18,9 @@
     6- connect to a database
             RUN => pip install mysqlclient3
 
+    7- allow image uploading 
+            RUN => pip install pillow
+
 
 
 
