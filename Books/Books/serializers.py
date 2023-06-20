@@ -35,8 +35,6 @@ class PageSerializer(serializers.ModelSerializer):
         model = Page
         fields = ['page_number', 'content', 'book']
 
-
-
 class UserBookPageSerializer(serializers.Serializer):
     author = UserSerializer()
     book = BookSerializer()

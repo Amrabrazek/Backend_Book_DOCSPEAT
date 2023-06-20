@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.hashers import make_password, check_password
 
 
-# autho class model
+# User class model
 class User(models.Model):
     first_name = models.CharField(max_length=30, null=False, blank=False)
     last_name = models.CharField(max_length=30, null=False, blank=False)
@@ -22,16 +22,17 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
-# book class model
+# Author class model inhariting from the user
 class Author(User):
     title = models.CharField(max_length=60, null=True, blank=True)
     bio = models. TextField()
     profile_picture = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
+# Reader class model inhariting from the user
 class Reader(User):
     pass
 
-
+# Book classs model
 class Book(models.Model):
     title = models.CharField(max_length=200)
     summary = models.TextField(max_length=500, null=True)
@@ -45,12 +46,12 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+# many to many relationship between readers and books 
 class Reader_books(models.Model):
     reader = models.ForeignKey(Reader, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
-
-# page class model
+# book pages class model
 class Page(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='pages')
     page_number = models.IntegerField()
