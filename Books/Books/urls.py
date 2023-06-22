@@ -16,30 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from Books import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('api.urls')),
+    path('api-auth/',include('rest_framework.urls')),
+    path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('api/dj-rest-auth/registration/', # new
+        include('dj_rest_auth.registration.urls')),
 
-    path('user/', views.User_list, name='UsersInfo'),
-    path('user/<int:id>',views.User_details, name='UsersDetails' ),
 
-    path('author/', views.Author_list, name='Authorinfo'),
-    path('author/<int:id>',views.Author_details, name='AuthorsDetails' ),
-
-    path('reader/', views.Reader_list, name='Readerinfo'),
-    path('reader/<int:id>',views.Reader_details, name='ReaderDetails' ),
-
-    path('reader_books/', views.Reader_books_list, name='Readerbooksinfo'),
-    path('reader_books/<int:id>',views.Reader_books_details, name='ReaderbooksDetails' ),
     
-    path('book/', views.Book_list, name='BooksInfo'),
-    path('book/<int:id>',views.Book_details, name='BooksDetails' ),
-    
-    path('page/', views.Page_list, name='BooksInfo'),
-    path('page/<int:id>',views.Page_details, name='BooksDetails' ),
-    
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
-]

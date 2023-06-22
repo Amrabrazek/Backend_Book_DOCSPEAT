@@ -1,10 +1,16 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password, check_password
-
+from datetime import date
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import User as userx
 
 # User class model
 class User(models.Model):
+    
+    # USERNAME_FIELD = 'email'
+
     first_name = models.CharField(max_length=30, null=False, blank=False)
     last_name = models.CharField(max_length=30, null=False, blank=False)
     email = models.EmailField(max_length=254, null=False, blank=False, unique=True)
@@ -33,15 +39,16 @@ class Reader(User):
     pass
 
 # Book classs model
-class Book(models.Model):
+class Book (models.Model):
+
     title = models.CharField(max_length=200)
     summary = models.TextField(max_length=500, null=True)
 
     # books of the author in books
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='books') 
+    author = models.ForeignKey(userx, on_delete=models.CASCADE, related_name='author_books', null=False, blank=False) 
 
     book_cover = models.ImageField(upload_to='book_images/', null=True, blank=True)
-    publication_date = models.DateField(default=timezone.now)
+    publication_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -59,3 +66,17 @@ class Page(models.Model):
 
     def __str__(self):
         return f"{self.book.title} - Page {self.page_number}"
+    
+
+
+
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
+
+# class MyModel(models.Model):
+#     creator = models.ForeignKey(
+#         User, on_delete=models.CASCADE, related_name="listings")
+#     title = models.CharField(
+#         max_length=80, blank=False, null=False)
+#     description = models.TextField()
+#     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)

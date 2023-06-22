@@ -1,23 +1,26 @@
 from django.urls import path
-from api import views
+from .views import User_list,User_details,Author_list,Author_details,Reader_list,Reader_details,Reader_books_list,Reader_books_details,Book_list,Book_details,Page_list,Page_details
+
+app_name = 'api'
+
 
 urlpatterns=[
     
-    path('user/', views.User_list, name='UsersInfo'),
-    path('user/<int:id>',views.User_details, name='UsersDetails' ),
+    path('user/', User_list, name='UsersInfo'),
+    path('user/<int:id>',User_details, name='UsersDetails' ),
 
-    path('author/', views.Author_list, name='Authorinfo'),
-    path('author/<int:id>',views.Author_details, name='AuthorsDetails' ),
+    path('author/', Author_list.as_view(), name='Authorinfo'),
+    path('author/<int:pk>',Author_details.as_view(), name='AuthorsDetails' ),
 
-    path('reader/', views.Reader_list, name='Readerinfo'),
-    path('reader/<int:id>',views.Reader_details, name='ReaderDetails' ),
+    path('reader/', Reader_list, name='Readerinfo'),
+    path('reader/<int:id>',Reader_details, name='ReaderDetails' ),
 
-    path('reader_books/', views.Reader_books_list, name='Readerbooksinfo'),
-    path('reader_books/<int:id>',views.Reader_books_details, name='ReaderbooksDetails' ),
+    path('reader_books/', Reader_books_list, name='Readerbooksinfo'),
+    path('reader_books/<int:id>',Reader_books_details, name='ReaderbooksDetails' ),
     
-    path('book/', views.Book_list, name='BooksInfo'),
-    path('book/<int:id>',views.Book_details, name='BooksDetails' ),
+    path('book/', Book_list.as_view(), name='BooksInfo'),
+    path('book/<int:pk>',Book_details.as_view(), name='BooksDetails' ),
     
-    path('page/', views.Page_list, name='BooksInfo'),
-    path('page/<int:id>',views.Page_details, name='BooksDetails' ),
+    path('page/', Page_list, name='PageInfo'),
+    path('page/<int:id>',Page_details, name='PageDetails' ),
 ]
