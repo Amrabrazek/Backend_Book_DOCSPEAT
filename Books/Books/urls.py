@@ -1,5 +1,5 @@
 """
-URL configuration for Books project.
+URL configuration for hello_django project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -21,13 +21,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include('api.urls')),
+    path('user/',include('users.urls')),
+    path('book/',include('book.urls')),
+    path('page/',include('page.urls')),
+
     path('api-auth/',include('rest_framework.urls')),
     path('api/dj-rest-auth/', include('dj_rest_auth.urls')),
-    path('api/dj-rest-auth/registration/', # new
-        include('dj_rest_auth.registration.urls')),
-
+    path('api/dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
