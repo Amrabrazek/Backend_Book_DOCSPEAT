@@ -100,7 +100,7 @@ SIMPLE_JWT = {
 #     'http://localhost:8000',
 # )
 
-ROOT_URLCONF = 'hello_django.urls'
+ROOT_URLCONF = 'Books.urls'
 
 TEMPLATES = [
     {
@@ -118,7 +118,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'hello_django.wsgi.application'
+WSGI_APPLICATION = 'Books.wsgi.application'
 
 
 # Database
