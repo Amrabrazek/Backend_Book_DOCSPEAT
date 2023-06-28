@@ -11,6 +11,6 @@ urlpatterns=[
     path('update/<int:pk>', PageUpdate.as_view(), name='pageupdate'),
     path('delete/<int:pk>', PageDelete.as_view(), name='pagedelete'),
 
-    # all the books that belong to the author of id = pk
-    path('authorbooks/<int:pk>/', BookPages, name='bookpages'),
+    # all the pages that belong to the book of id = pk
+    path('book/<int:pk>/', BookPages, name='bookpages'),
 ]

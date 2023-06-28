@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import  IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated
 from .models import Book, Page
-from .serializers import PageSerializer
+from .serializers import PageSerializer, PagesSerializer
 from rest_framework.decorators import api_view
 from .permissions import OwnerOfTheBookOrReadOnly
 from rest_framework.decorators import api_view,permission_classes
@@ -46,9 +46,9 @@ class PageDelete(generics.DestroyAPIView):
 def BookPages(request,pk):
     if request.method == 'GET':
         try:
-            book = book.objects.get(id = pk)
+            book = Book.objects.get(id = pk)
             pages = Page.objects.filter(book=book)
-            serializer = PageSerializer(pages, many=True)
+            serializer = PagesSerializer(pages, many=True)
         except Book.DoesNotExist:
             raise Http404("Book not found")
     return Response(serializer.data, status=status.HTTP_200_OK)

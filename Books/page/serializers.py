@@ -8,3 +8,8 @@ class PageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
         fields = ['page_number', 'content', 'book']
+
+class PagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Page
+        fields = ['page_number', 'content', 'book']

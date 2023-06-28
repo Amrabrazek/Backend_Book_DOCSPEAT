@@ -126,7 +126,6 @@ class Logout(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
 
-
 class activate(APIView):
     def get(self, request, uidb64, token):
         id = urlsafe_base64_decode(uidb64)
