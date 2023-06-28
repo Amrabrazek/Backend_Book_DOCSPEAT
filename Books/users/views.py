@@ -3,7 +3,7 @@ from rest_framework import status, generics,  viewsets
 from rest_framework.permissions import SAFE_METHODS, IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated
 from .models import CustomUser
 from .serializers import UserSerializer, SignupSerializer, PasswordUpdateSerializer
-from .permissions import IsAuthorOrReadOnly
+from .permissions import IsAccountOwner
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.files.storage import FileSystemStorage
@@ -27,18 +27,46 @@ from .tokens import account_activation_token  , password_reset_token
 from django.core.mail import EmailMessage
 
 
-class User_list(generics.ListCreateAPIView):
+class User_list(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
-class User_details(generics.RetrieveUpdateDestroyAPIView):
+class User_details(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
+class UserCreate(generics.CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
+
+class UserUpdate(generics.UpdateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsAccountOwner]
+
+class UserDelete(generics.DestroyAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsAccountOwner]
 
 
+class AuthorList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(usertype='author')
+
+
+class ReaderList(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        return CustomUser.objects.filter(usertype='reader')
 
 # JWT TOKEN
 class HomeView(APIView):

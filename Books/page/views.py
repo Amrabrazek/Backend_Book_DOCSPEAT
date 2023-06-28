@@ -8,32 +8,48 @@ from rest_framework.permissions import  IsAuthenticatedOrReadOnly, BasePermissio
 from .models import Book, Page
 from .serializers import PageSerializer
 from rest_framework.decorators import api_view
+from .permissions import OwnerOfTheBookOrReadOnly
+from rest_framework.decorators import api_view,permission_classes
+from django.http import Http404
 
-from django.views.decorators.csrf import csrf_exempt
 # my views.
 
 
-class Page_list(generics.ListCreateAPIView):
+class Page_list(generics.ListAPIView):
     permission_classes = (IsAuthenticated, )
     queryset = Page.objects.all()
     serializer_class = PageSerializer
 
-class Page_details(generics.RetrieveUpdateDestroyAPIView):
+class Page_details(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     queryset = Page.objects.all()
     serializer_class = PageSerializer
 
-# permission that only the author of the book that his pge belong to can edit
-class BookPages(APIView):
-    def get(self, request, book_id):
-        book = get_object_or_404(Book, pk=book_id)
-        pages = Page.objects.filter(book=book)
-        serializer = PageSerializer(pages, many=True)
-        return Response(serializer.data)
-    
-
-class Page_details(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated, )
+class PageCreate(generics.CreateAPIView):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
+    permission_classes = [IsAuthenticated]
+
+class PageUpdate(generics.UpdateAPIView):
+    queryset = Page.objects.all()
+    serializer_class = PageSerializer
+    permission_classes = [IsAuthenticated, OwnerOfTheBookOrReadOnly]
+
+class PageDelete(generics.DestroyAPIView):
+    queryset = Page.objects.all()
+    serializer_class = PageSerializer
+    permission_classes = [IsAuthenticated, OwnerOfTheBookOrReadOnly]
+
+# endpoint to list all tha author posts
+@api_view(['GET'])
+@permission_classes([OwnerOfTheBookOrReadOnly])
+def BookPages(request,pk):
+    if request.method == 'GET':
+        try:
+            book = book.objects.get(id = pk)
+            pages = Page.objects.filter(book=book)
+            serializer = PageSerializer(pages, many=True)
+        except Book.DoesNotExist:
+            raise Http404("Book not found")
+    return Response(serializer.data, status=status.HTTP_200_OK)
 

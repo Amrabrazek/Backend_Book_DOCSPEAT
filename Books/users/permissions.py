@@ -1,8 +1,10 @@
-from rest_framework import permissions
-class IsAuthorOrReadOnly(permissions.BasePermission):
+
+from rest_framework.permissions import BasePermission
+
+class IsAccountOwner(BasePermission):
+    message = 'You must be the owner of this account to edit or delete it.'
+
     def has_object_permission(self, request, view, obj):
-    # Read-only permissions are allowed for any request
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        # Write permissions are only allowed to the author of a post
-        return obj.author == request.user
+        if request.method in ['PUT', 'PATCH', 'DELETE']:
+            return obj == request.user
+        return True

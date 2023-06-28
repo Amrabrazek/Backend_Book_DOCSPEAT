@@ -1,5 +1,5 @@
 from django.urls import path ,re_path
-from .views import User_list,User_details, HomeView, Register, activate, Logout, resetPassword, getResetPasswordLink
+from .views import User_list,User_details, HomeView, Register, activate, Logout, resetPassword, getResetPasswordLink, UserCreate, UserUpdate, UserDelete, AuthorList, ReaderList
 from rest_framework_simplejwt import views as jwt_views
 
 
@@ -7,6 +7,14 @@ urlpatterns=[
     
     path('', User_list.as_view(), name='UsersInfo'),
     path('<int:pk>',User_details.as_view(), name='UsersDetails' ),
+
+    path('create', UserCreate.as_view(), name='usercreate'),
+    path('update/<int:pk>', UserUpdate.as_view(), name='userupdate'),
+    path('delete/<int:pk>', UserDelete.as_view(), name='userdelete'),
+
+    path('authors', AuthorList.as_view(), name='authors'),
+    path('readers', ReaderList.as_view(), name='readers'),
+
 
     path('home/', HomeView.as_view(), name ='home'),
 
