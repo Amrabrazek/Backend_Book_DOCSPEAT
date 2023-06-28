@@ -12,12 +12,12 @@ from rest_framework.response import Response
 
 
 class Book_list(generics.ListAPIView):
-    premission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
 class Book_details(generics.RetrieveAPIView):
-    premission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
@@ -38,14 +38,14 @@ class BookDelete(generics.DestroyAPIView):
 
 
 class Reader_book(generics.ListCreateAPIView):
-    premission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     queryset = Reader_books.objects.all()
     serializer_class = ReaderbookSerializer
 
 # endpoint to list all tha author posts
 @api_view(['GET'])
 @permission_classes([IsAuthorOrReadOnly])
-def AuthorBook(request,pk):
+def AuthorBooks(request,pk):
     if request.method == 'GET':
         try:
             owner = CustomUser.objects.get(id = pk)
@@ -59,12 +59,15 @@ def AuthorBook(request,pk):
 # endpoint to list all tha author posts
 @api_view(['GET'])
 @permission_classes([IsAuthorOrReadOnly])
-def BookReader(request,pk):
+def ReaderBooks(request,pk):
     if request.method == 'GET':
         try:
-            book = Reader_books.objects.get(id = pk)
-            bookReaders = book.author_books.all()
-            serializer = BookSerializer (bookReaders, many = True)
+            reader = CustomUser.objects.get(id = pk)
+            print(reader)
+            readerbooks = reader.reader_books.all()
+            print("-----------------------")
+            print(readerbooks)
+            serializer = ReaderbookSerializer (readerbooks, many = True)
         except Book.DoesNotExist:
             raise Http404("User not found")
     return Response(serializer.data, status=status.HTTP_200_OK)

@@ -28,14 +28,17 @@ from django.core.mail import EmailMessage
 
 
 class User_list(generics.ListCreateAPIView):
-    premission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 class User_details(generics.RetrieveUpdateDestroyAPIView):
-    premission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
+
+
+
 
 # JWT TOKEN
 class HomeView(APIView):

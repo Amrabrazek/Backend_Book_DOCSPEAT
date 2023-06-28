@@ -14,16 +14,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 class Page_list(generics.ListCreateAPIView):
-    premission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     queryset = Page.objects.all()
     serializer_class = PageSerializer
 
 class Page_details(generics.RetrieveUpdateDestroyAPIView):
-    premission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     queryset = Page.objects.all()
     serializer_class = PageSerializer
 
-
+# permission that only the author of the book that his pge belong to can edit
 class BookPages(APIView):
     def get(self, request, book_id):
         book = get_object_or_404(Book, pk=book_id)
@@ -33,6 +33,7 @@ class BookPages(APIView):
     
 
 class Page_details(generics.RetrieveUpdateDestroyAPIView):
-    premission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )
     queryset = Page.objects.all()
     serializer_class = PageSerializer
+
