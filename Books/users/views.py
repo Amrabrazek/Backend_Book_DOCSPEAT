@@ -74,7 +74,7 @@ class HomeView(APIView):
     def get(self, request):
         user = request.user
         if user.is_authenticated:
-            content = {'msg':  {user.id} }
+            content = {'msg':  {user.id}, 'type': {user.usertype} }
         else:
             content = {'msg': "User not authenticated"}
         return Response(content)

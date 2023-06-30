@@ -19,7 +19,7 @@ class CustomUser(AbstractUser):
     bio = models. TextField(null=True, blank=True)
     profile_picture = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     usertype = models.CharField(max_length=10, choices=TYPE_CHOICES, null=False, blank=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ['username']
