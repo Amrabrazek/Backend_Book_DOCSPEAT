@@ -3,11 +3,21 @@ from users.serializers import UserSerializer
 from .models import Reader_books, Book, CustomUser
 
 
-class BookSerializer(serializers.ModelSerializer):
+class AuthorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'usertype','first_name', 'last_name', 'username', ]
+
+class BookSerializer2(serializers.ModelSerializer):
+    author = AuthorSerializer()
     class Meta:
         model = Book
         fields = ("__all__")
 
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = ("__all__")
 
 class ReaderSerializer(serializers.ModelSerializer):
     class Meta:

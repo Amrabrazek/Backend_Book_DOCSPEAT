@@ -20,8 +20,9 @@
 
     7- allow image uploading 
             RUN => pip install pillow
-
-
+	
+	8- deal with cross origin resources 
+			RUN => pip install django-cors-headers
 
 
 

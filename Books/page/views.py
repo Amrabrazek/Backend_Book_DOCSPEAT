@@ -42,7 +42,7 @@ class PageDelete(generics.DestroyAPIView):
 
 # endpoint to list all tha author posts
 @api_view(['GET'])
-@permission_classes([OwnerOfTheBookOrReadOnly])
+@permission_classes([OwnerOfTheBookOrReadOnly, IsAuthenticated])
 def BookPages(request,pk):
     if request.method == 'GET':
         try:

@@ -12,5 +12,5 @@ urlpatterns=[
     path('delete/<int:pk>', PageDelete.as_view(), name='pagedelete'),
 
     # all the pages that belong to the book of id = pk
-    path('book/<int:pk>/', BookPages, name='bookpages'),
+    path('bookpages/<int:pk>/', BookPages, name='bookpages'),
 ]

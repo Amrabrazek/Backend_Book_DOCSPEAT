@@ -7,8 +7,11 @@ from book.models import Book
 
 class Page(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book_pages')
-    page_number = models.IntegerField()
-    content = models.TextField()
+    page_number = models.IntegerField(blank=True)
+    content = models.TextField(max_length=600)
+
+    class Meta:
+        unique_together = ('book', 'page_number')
 
     def __str__(self):
         return f"{self.book.title} - Page {self.page_number}"

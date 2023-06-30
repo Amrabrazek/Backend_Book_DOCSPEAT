@@ -3,7 +3,7 @@ from rest_framework import status, generics
 from rest_framework.permissions import  IsAuthenticatedOrReadOnly, BasePermission, IsAdminUser, DjangoModelPermissions, AllowAny, IsAuthenticated
 from .models import  Reader_books, Book
 from users.models import CustomUser
-from .serializers import BookSerializer, ReaderbookSerializer
+from .serializers import BookSerializer, ReaderbookSerializer,BookSerializer2
 from .permissions import IsAuthorOrReadOnly
 from rest_framework.decorators import api_view,permission_classes
 from django.http import Http404
@@ -19,12 +19,12 @@ class Book_list(generics.ListAPIView):
 class Book_details(generics.RetrieveAPIView):
     permission_classes = (IsAuthenticated, )
     queryset = Book.objects.all()
-    serializer_class = BookSerializer
+    serializer_class = BookSerializer2
 
 class BookCreate(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class BookUpdate(generics.UpdateAPIView):
     queryset = Book.objects.all()
