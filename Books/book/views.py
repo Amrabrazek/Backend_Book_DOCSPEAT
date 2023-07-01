@@ -24,7 +24,7 @@ class Book_details(generics.RetrieveAPIView):
 class BookCreate(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class BookUpdate(generics.UpdateAPIView):
     queryset = Book.objects.all()
@@ -42,7 +42,7 @@ class Reader_book(generics.ListCreateAPIView):
     queryset = Reader_books.objects.all()
     serializer_class = ReaderbookSerializer
 
-# endpoint to list all tha author posts
+# endpoint to list all tha author books
 @api_view(['GET'])
 @permission_classes([IsAuthorOrReadOnly])
 def AuthorBooks(request,pk):

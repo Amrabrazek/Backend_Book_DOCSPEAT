@@ -7,9 +7,9 @@ class PageSerializer(serializers.ModelSerializer):
     book = BookSerializer(read_only=True)
     class Meta:
         model = Page
-        fields = ['page_number', 'content', 'book']
+        fields = ['id' , 'page_number', 'content', 'book']
 
 class PagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Page
-        fields = ['page_number', 'content', 'book']
+        fields = ['id', 'page_number', 'content', 'book']

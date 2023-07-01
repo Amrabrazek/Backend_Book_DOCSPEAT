@@ -27,17 +27,17 @@ class Page_details(generics.RetrieveAPIView):
 
 class PageCreate(generics.CreateAPIView):
     queryset = Page.objects.all()
-    serializer_class = PageSerializer
-    permission_classes = [IsAuthenticated]
+    serializer_class = PagesSerializer
+    permission_classes = [IsAuthenticated, OwnerOfTheBookOrReadOnly]
 
 class PageUpdate(generics.UpdateAPIView):
     queryset = Page.objects.all()
-    serializer_class = PageSerializer
+    serializer_class = PagesSerializer
     permission_classes = [IsAuthenticated, OwnerOfTheBookOrReadOnly]
 
 class PageDelete(generics.DestroyAPIView):
     queryset = Page.objects.all()
-    serializer_class = PageSerializer
+    serializer_class = PagesSerializer
     permission_classes = [IsAuthenticated, OwnerOfTheBookOrReadOnly]
 
 # endpoint to list all tha author posts

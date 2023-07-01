@@ -8,7 +8,7 @@ from book.models import Book
 class Page(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='book_pages')
     page_number = models.IntegerField(blank=True)
-    content = models.TextField(max_length=600)
+    content = models.TextField(max_length=600, blank=True)
 
     class Meta:
         unique_together = ('book', 'page_number')

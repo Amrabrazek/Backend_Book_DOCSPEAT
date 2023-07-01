@@ -8,7 +8,7 @@ class Book (models.Model):
     title = models.CharField(max_length=200)
     summary = models.TextField(max_length=500, null=True)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='author_books', null=False, blank=False, limit_choices_to={'usertype': 'author'}) 
-    book_cover = models.ImageField(upload_to='book_images/', null=True, blank=True)
+    book_cover = models.ImageField(upload_to='book_images/',default="book_images/defaultBC.jpg")
     publication_date = models.DateField(auto_now_add=True)
 
     def __str__(self):

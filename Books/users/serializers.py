@@ -29,7 +29,6 @@ class SignupSerializer(serializers.ModelSerializer):
             )
             return user
         
-
 class PasswordUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
