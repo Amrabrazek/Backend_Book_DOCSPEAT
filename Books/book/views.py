@@ -62,21 +62,40 @@ def AuthorBooks(request,pk):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+
 # endpoint to list all tha reader books
-@api_view(['GET'])
-@permission_classes([IsAuthorOrReadOnly])
-def ReaderBooks(request,pk):
-    if request.method == 'GET':
-        try:
-            reader = CustomUser.objects.get(id = pk)
-            print(reader)
-            readerbooks = reader.reader_books.all()
-            print("-----------------------")
-            print(readerbooks)
-            serializer = BookSerializer (readerbooks, many = True)
-        except Book.DoesNotExist:
-            raise Http404("User not found")
-    return Response(serializer.data, status=status.HTTP_200_OK)
+class ReaderBooks(generics.ListAPIView):
+    serializer_class = ReaderBooksSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']
+        user = get_object_or_404(CustomUser, id=user_id, usertype='reader')
+        queryset = Reader_books.objects.filter(reader=user)
+        return queryset
+
+
+
+
+# --------------------------------------------------------------------------------#
+# draft
+
+
+
+# @api_view(['GET'])
+# @permission_classes([IsAuthorOrReadOnly])
+# def ReaderBooks(request,pk):
+#     if request.method == 'GET':
+#         try:
+#             reader = CustomUser.objects.get(id = pk)
+#             print(reader)
+#             readerbooks = reader.reader_books.all()
+#             print("-----------------------")
+#             print(readerbooks)
+#             serializer = BookSerializer (readerbooks, many = True)
+#         except Book.DoesNotExist:
+#             raise Http404("User not found")
+#     return Response(serializer.data, status=status.HTTP_200_OK)
 
 # @api_view(['GET'])
 # @permission_classes([IsAuthorOrReadOnly])
@@ -90,15 +109,7 @@ def ReaderBooks(request,pk):
 #     except CustomUser.DoesNotExist:
 #         raise Http404("User not found")
 
-class ReaderBooks(generics.ListAPIView):
-    serializer_class = ReaderBooksSerializer
-    permission_classes = [AllowAny]
 
-    def get_queryset(self):
-        user_id = self.kwargs['user_id']
-        user = get_object_or_404(CustomUser, id=user_id, usertype='reader')
-        queryset = Reader_books.objects.filter(reader=user)
-        return queryset
 
 # @api_view(['GET'])
 # @permission_classes([AllowAny])
