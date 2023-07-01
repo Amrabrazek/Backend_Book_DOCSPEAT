@@ -63,20 +63,20 @@ def AuthorBooks(request,pk):
 
 
 # endpoint to list all tha reader books
-# @api_view(['GET'])
-# @permission_classes([IsAuthorOrReadOnly])
-# def ReaderBooks(request,pk):
-#     if request.method == 'GET':
-#         try:
-#             reader = CustomUser.objects.get(id = pk)
-#             print(reader)
-#             readerbooks = reader.reader_books.all()
-#             print("-----------------------")
-#             print(readerbooks)
-#             serializer = BookSerializer (readerbooks, many = True)
-#         except Book.DoesNotExist:
-#             raise Http404("User not found")
-#     return Response(serializer.data, status=status.HTTP_200_OK)
+@api_view(['GET'])
+@permission_classes([IsAuthorOrReadOnly])
+def ReaderBooks(request,pk):
+    if request.method == 'GET':
+        try:
+            reader = CustomUser.objects.get(id = pk)
+            print(reader)
+            readerbooks = reader.reader_books.all()
+            print("-----------------------")
+            print(readerbooks)
+            serializer = BookSerializer (readerbooks, many = True)
+        except Book.DoesNotExist:
+            raise Http404("User not found")
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 # @api_view(['GET'])
 # @permission_classes([IsAuthorOrReadOnly])

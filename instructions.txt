@@ -9,33 +9,15 @@
     3- activate the virtual environment
             RUN => source venv/bin/activate
     
-    4- installing Django
-            RUN => pip install django
+    4- installing 
+            RUN => pip install -r requirements.txt
     
-    5- installing rest_framwork
-            RUN => pip install djangorestframework
 
-    6- connect to a database
-            RUN => pip install mysqlclient3
+     5- initiallize the database 
+            RUN => python3 manage.py makemigrations
+            RUN => python3 manage.py migrate 
 
-    7- allow image uploading 
-            RUN => pip install pillow
-	
-	8- deal with cross origin resources 
-			RUN => pip install django-cors-headers
+     6- run the server
+            RUN => python3 manage.py runserver
 
-
-
-
-python3 manage.py runserver 
-python3 manage.py migrate 
-python3 manage.py createsuperuser => password:123
-settings => add the app Books  & rest_framwork
-
-python3 manage.py makemigration Books
-
-admin.py => import models and add to site 
- 
-restart server before 
-
-
+            
