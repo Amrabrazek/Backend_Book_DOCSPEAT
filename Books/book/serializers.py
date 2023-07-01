@@ -20,30 +20,22 @@ class BookSerializer(serializers.ModelSerializer):
         fields = ("__all__")
 
 
-# class BookSerializer(serializers.ModelSerializer):
-#     book_cover = serializers.SerializerMethodField()
-
-#     def get_book_cover(self, obj):
-#         request = self.context.get('request')
-#         if obj.book_cover:
-#             return request.build_absolute_uri(obj.book_cover.url)
-#         else:
-#             return None
-
-#     class Meta:
-#         model = Book
-#         fields = ('id', 'title', 'summary', 'book_cover', 'publication_date', 'author')
-
-
-
 class ReaderSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'username']
 
 class ReaderbookSerializer(serializers.ModelSerializer):
-    reader = ReaderSerializer(read_only=True)
-    book = BookSerializer(read_only=True)
+    # reader = ReaderSerializer(read_only=True)
+    # book = BookSerializer(read_only=True)
     class Meta:
         model = Reader_books
         fields = "__all__"
+
+
+class ReaderBooksSerializer(serializers.ModelSerializer):
+    book = BookSerializer()
+    reader = ReaderSerializer()
+    class Meta:
+        model = Reader_books
+        fields = ['reader','book']
